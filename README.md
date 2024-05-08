@@ -1,2 +1,2 @@
 # blog-test
-Django app 
+Testing the first commit
