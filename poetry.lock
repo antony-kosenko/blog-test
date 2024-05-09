@@ -15,6 +15,25 @@ files = [
 tests = ["mypy (>=0.800)", "pytest", "pytest-asyncio"]
 
 [[package]]
+name = "channels"
+version = "4.1.0"
+description = "Brings async, event-driven capabilities to Django 3.2 and up."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "channels-4.1.0-py3-none-any.whl", hash = "sha256:a3c4419307f582c3f71d67bfb6eff748ae819c2f360b9b141694d84f242baa48"},
+    {file = "channels-4.1.0.tar.gz", hash = "sha256:e0ed375719f5c1851861f05ed4ce78b0166f9245ca0ecd836cb77d4bb531489d"},
+]
+
+[package.dependencies]
+asgiref = ">=3.6.0,<4"
+Django = ">=4.2"
+
+[package.extras]
+daphne = ["daphne (>=4.0.0)"]
+tests = ["async-timeout", "coverage (>=4.5,<5.0)", "pytest", "pytest-asyncio", "pytest-django"]
+
+[[package]]
 name = "django"
 version = "4.2.13"
 description = "A high-level Python web framework that encourages rapid development and clean, pragmatic design."
@@ -44,6 +63,25 @@ files = [
     {file = "django-resized-1.0.2.tar.gz", hash = "sha256:52d727860f64ef4fdadbe2e74b66231c71c59df4d95949e338fcd320450f77fa"},
     {file = "django_resized-1.0.2-py3-none-any.whl", hash = "sha256:d55a8d4125838486a1e76ffb689f8364f7d579bc7562b04400065602ec2ba7cc"},
 ]
+
+[[package]]
+name = "djangochannelsrestframework"
+version = "1.2.0"
+description = "RESTful API for WebSockets using django channels."
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "djangochannelsrestframework-1.2.0-py3-none-any.whl", hash = "sha256:6e4202bb26491874c7c07dee48b91a70fc9afab5a6c7d680f50ade8da4be4eff"},
+    {file = "djangochannelsrestframework-1.2.0.tar.gz", hash = "sha256:fc689d21f9edcc5ec2747dafe36422acc84c059bf858b05555ae3199a948250d"},
+]
+
+[package.dependencies]
+channels = ">=4.0.0"
+Django = ">=3.2"
+djangorestframework = ">=3.14.0"
+
+[package.extras]
+tests = ["channels[daphne] (>=4.0.0)", "coverage (>=6.3.1)", "pytest (>=7.0.1)", "pytest-asyncio (>=0.18.1)", "pytest-django (>=4.5.2)"]
 
 [[package]]
 name = "djangorestframework"
@@ -188,4 +226,4 @@ files = [
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "dc9e637d2b3438787a0eb50a7dcbcd62477aa4c592166b95817607430ee7b3f9"
+content-hash = "741e8fb8c6172774d40ceb47e9cf8a8c03c3b7274dde6933bb8a3278e53a2b5a"

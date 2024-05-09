@@ -38,6 +38,7 @@ INSTALLED_APPS = [
 
     # project apps
     'accounts',
+    'comments',
 ]
 
 MIDDLEWARE = [
