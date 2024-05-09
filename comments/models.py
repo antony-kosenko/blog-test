@@ -1,13 +1,14 @@
 from django.db import models
+from mptt.models import MPTTModel, TreeForeignKey
 
 from accounts.models import CustomUser
 
 
-class Comment(models.Model):
+class Comment(MPTTModel):
     """ The base model represents comment object in db. """
 
     user = models.ForeignKey(CustomUser, related_name="comments", on_delete=models.CASCADE)
-    parent = models.ForeignKey(
+    parent = TreeForeignKey(
         "self",
         blank=True,
         null=True,

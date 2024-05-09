@@ -268,6 +268,40 @@ argon2 = ["argon2-cffi (>=19.1.0)"]
 bcrypt = ["bcrypt"]
 
 [[package]]
+name = "django-js-asset"
+version = "2.2.0"
+description = "script tag with additional attributes for django.forms.Media"
+optional = false
+python-versions = ">=3.8"
+files = [
+    {file = "django_js_asset-2.2.0-py3-none-any.whl", hash = "sha256:7ef3e858e13d06f10799b56eea62b1e76706f42cf4e709be4e13356bc0ae30d8"},
+    {file = "django_js_asset-2.2.0.tar.gz", hash = "sha256:0c57a82cae2317e83951d956110ce847f58ff0cdc24e314dbc18b35033917e94"},
+]
+
+[package.dependencies]
+django = ">=3.2"
+
+[package.extras]
+tests = ["coverage"]
+
+[[package]]
+name = "django-mptt"
+version = "0.16.0"
+description = "Utilities for implementing Modified Preorder Tree Traversal with your Django Models and working with trees of Model instances."
+optional = false
+python-versions = ">=3.9"
+files = [
+    {file = "django_mptt-0.16.0-py3-none-any.whl", hash = "sha256:8716849ba3318d94e2e100ed0923a05c1ffdf8195f8472b690dbaf737d2af3b5"},
+    {file = "django_mptt-0.16.0.tar.gz", hash = "sha256:56c9606bf0b329b5f5afd55dd8bfd073612ea1d5999b10903b09de62bee84c8e"},
+]
+
+[package.dependencies]
+django-js-asset = "*"
+
+[package.extras]
+tests = ["coverage[toml]", "mock-django"]
+
+[[package]]
 name = "django-resized"
 version = "1.0.2"
 description = "Resizes image origin to specified size."
@@ -732,4 +766,4 @@ testing = ["coverage (>=5.0.3)", "zope.event", "zope.testing"]
 [metadata]
 lock-version = "2.0"
 python-versions = "^3.11"
-content-hash = "de6f5556b0ca10d10977b5efcee47415bb3ca3dc3b3b3772cbc6546c31f791dc"
+content-hash = "91cbc6f6af754d44fb4fe027c5b66cac2be3c9b765a4a586c3420c5e3c58f6ae"

@@ -36,6 +36,7 @@ INSTALLED_APPS = [
     # third-party apps
     'rest_framework',
     'channels',
+    'mptt',
 
 
     # project apps

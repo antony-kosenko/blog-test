@@ -6,31 +6,34 @@
 </head>
 <body>
     <h1>Here is some test window</h1>
+<div style="display: flex; width: 100%; heigh=100%; gap: 300px;">
+    <pre id="response" style=""></pre>
+    <pre id="response1" style=""></pre>
+</div>
 
-<button id="list">LIST</button>
-<br>
-<pre id="response"></pre>
 
 <script>
-    webSocket = new WebSocket("ws://localhost:8000/ws/");
+    const ws = new WebSocket("ws://localhost:8000/ws/")
+    var responseBlock1 = document.getElementById("response1")
+    var responseBlock = document.getElementById("response")
 
-    webSocket.onmessage = function (e) {
-        const data = JSON.parse(e.data);
-        if (data.action === "update") {
-            updateData(data.payload);
-        }
-    }
-
-    document.getElementById("list").onclick = function (e) {
-        webSocket.send(JSON.stringify({
+    ws.onopen = function () {
+        ws.send(JSON.stringify({
         action: "list",
         request_id: new Date().getTime()
     }));
     }
 
-    function updateData(data) {
-        document.getElementById("response").textContent = JSON.stringify(data, undefined, 2);
+    ws.onmessage = function(){
+        ws.send(JSON.stringify({
+            action: "subscribe_to_comment_activity",
+            request_id: new Date().getTime(),
+        }))
     }
+    ws.addEventListener("message", (event) => {
+        responseBlock1.textContent = JSON.stringify(JSON.parse(event.data), undefined, 2)
+    });
+
 </script>
 
 </body>
