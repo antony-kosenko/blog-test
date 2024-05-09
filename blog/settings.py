@@ -38,7 +38,6 @@ INSTALLED_APPS = [
 
     # project apps
     'accounts',
-    'posts',
 ]
 
 MIDDLEWARE = [
@@ -121,6 +120,21 @@ USE_TZ = True
 
 STATIC_URL = 'static/'
 
+# Media files
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = BASE_DIR / "media"
+
+# Image resizing
+
+DJANGORESIZED_DEFAULT_SIZE = [320, 240]
+DJANGORESIZED_DEFAULT_SCALE = 0.5
+DJANGORESIZED_DEFAULT_QUALITY = 95
+DJANGORESIZED_DEFAULT_KEEP_META = True
+DJANGORESIZED_DEFAULT_FORCE_FORMAT = "WEBP"
+DJANGORESIZED_DEFAULT_FORMAT_EXTENSIONS = {'JPEG': ".jpg", "WEBP": ".webp"}
+DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
@@ -129,5 +143,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
-    ]
+    ],
+    'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+    'PAGE_SIZE': 25
 }
