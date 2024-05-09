@@ -3,6 +3,14 @@ from rest_framework import serializers
 from accounts.models import CustomUser
 
 
+class BaseCustomUserSerializer(serializers.ModelSerializer):
+    """ Base CustomUser serializer for data processing in external project apps """
+
+    class Meta:
+        model = CustomUser
+        fields = ('uuid', 'email', 'username', 'avatar', 'homepage')
+
+
 class CustomUserSerializer(serializers.ModelSerializer):
     """ CustomUser core serializer to process an instance's data.  """
     password = serializers.CharField(write_only=True, required=False)

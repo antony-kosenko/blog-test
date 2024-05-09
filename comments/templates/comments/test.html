@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Here is some test window</h1>
+
+<button id="list">LIST</button>
+<br>
+<pre id="response"></pre>
+
+<script>
+    webSocket = new WebSocket("ws://localhost:8000/ws/");
+
+    webSocket.onmessage = function (e) {
+        const data = JSON.parse(e.data);
+        if (data.action === "update") {
+            updateData(data.payload);
+        }
+    }
+
+    document.getElementById("list").onclick = function (e) {
+        webSocket.send(JSON.stringify({
+        action: "list",
+        request_id: new Date().getTime()
+    }));
+    }
+
+    function updateData(data) {
+        document.getElementById("response").textContent = JSON.stringify(data, undefined, 2);
+    }
+</script>
+
+</body>
+</html>

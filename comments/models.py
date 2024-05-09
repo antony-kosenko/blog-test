@@ -29,10 +29,10 @@ class Comment(models.Model):
     def __str__(self):
         return f"Comment[{self.id}] | {self.text[0:40]}"
 
-    def get_rating(self):
+    def get_rating(self) -> int:
         """ Returns comment's rating """
-        likes = self.rates.filter(rating='L').count()
-        dislikes = self.rates.filter(rating='D').count()
+        likes: int = self.rates.filter(rating='L').count()
+        dislikes: int = self.rates.filter(rating='D').count()
         return likes - dislikes
 
 
