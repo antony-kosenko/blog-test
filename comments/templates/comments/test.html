@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Chat</title>
+</head>
+<body>
+    <h1>Here is some test window</h1>
+<div style="display: flex; width: 100%; heigh=100%; gap: 300px;">
+    <pre id="response" style=""></pre>
+    <pre id="response1" style=""></pre>
+</div>
+
+
+<script>
+    const ws = new WebSocket("ws://localhost:8000/ws/")
+    var responseBlock1 = document.getElementById("response1")
+    var responseBlock = document.getElementById("response")
+
+    ws.onopen = function () {
+        ws.send(JSON.stringify({
+        action: "list",
+        request_id: new Date().getTime()
+    }));
+    }
+
+    ws.onmessage = function(){
+        ws.send(JSON.stringify({
+            action: "subscribe_to_comment_activity",
+            request_id: new Date().getTime(),
+        }))
+    }
+    ws.addEventListener("message", (event) => {
+        responseBlock1.textContent = JSON.stringify(JSON.parse(event.data), undefined, 2)
+    });
+
+</script>
+
+</body>
+</html>

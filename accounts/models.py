@@ -61,7 +61,9 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "Users"
 
     def __str__(self):
-        return f"{self.username}[{self.email}]"
+        # TODO remove
+        # return f"{self.username}[{self.email}]"
+        return f"{self.pk}"
 
     def save(self, *args, **kwargs):
         if not self._password:
