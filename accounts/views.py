@@ -12,6 +12,3 @@ class CustomUserViewSet(ModelViewSet):
 
     queryset = CustomUser.objects.all()
     serializer_class = CustomUserSerializer
-#     FIXME Serving media?
-
-

@@ -40,14 +40,17 @@ class Comment(MPTTModel):
 class Rate(models.Model):
     """ Comment rating model."""
 
-    RATE_OPTIONS = {
-        "L": "Like",
-        "D": "Dislike"
-    }
+    RATE_OPTIONS = (
+        ("L", "Like"),
+        ("D", "Dislike")
+    )
 
     comment = models.ForeignKey(Comment, related_name="rates", on_delete=models.CASCADE)
     user = models.ForeignKey(CustomUser, related_name="rates", null=True, on_delete=models.SET_NULL)
-    rating = models.CharField(max_length=1)
+    rating = models.CharField(max_length=1, choices=RATE_OPTIONS)
+
+    class Meta:
+        unique_together = ('comment', 'user')
 
     def __str__(self):
-        return f"{self.user} {self.RATE_OPTIONS.get(self.rating)} Comment[{self.id}]"
+        return f"{self.comment} {self.rating}d by {self.user}"
