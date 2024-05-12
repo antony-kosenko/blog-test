@@ -9,6 +9,17 @@ from accounts.models import CustomUser
 from comments.models import Comment, Rate
 
 
+class NewCommentSerializer(serializers.ModelSerializer):
+    """ Serializes response for newly created comment """
+
+    user = BaseCustomUserSerializer(read_only=True)
+
+    class Meta:
+        model = Comment
+        exclude = ('level', 'lft', 'rght', 'tree_id')
+        read_only_fields = ('date_created', )
+
+
 class CommentSerializer(serializers.ModelSerializer):
     """ Serializes Comment model data. """
 
@@ -24,10 +35,10 @@ class CommentSerializer(serializers.ModelSerializer):
         """ Returns a rate sum. """
         return obj.get_rating()
 
-    def get_fields(self):
-        fields = super(CommentSerializer, self).get_fields()
-        fields['children'] = CommentSerializer(many=True, required=False, read_only=True)
-        return fields
+    # def get_fields(self):
+    #     fields = super(CommentSerializer, self).get_fields()
+    #     fields['children'] = CommentSerializer(many=True, required=False, read_only=True)
+    #     return fields
 
     def create(self, validated_data):
         """
@@ -48,16 +59,8 @@ class CommentSerializer(serializers.ModelSerializer):
             return comment
 
 
-class RateCreateSerializer(serializers.ModelSerializer):
+class RateSerializer(serializers.ModelSerializer):
     """ Serializes Rate create method """
-
-    class Meta:
-        model = Rate
-        fields = '__all__'
-
-
-class RateUpdateSerializer(serializers.ModelSerializer):
-    """ Serializes Rate update method."""
 
     class Meta:
         model = Rate

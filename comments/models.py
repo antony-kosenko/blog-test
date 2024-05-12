@@ -50,7 +50,7 @@ class Rate(models.Model):
     rating = models.CharField(max_length=1, choices=RATE_OPTIONS)
 
     class Meta:
-        unique_together = ('comment', 'user')
+        unique_together = ("comment", "user", "rating")
 
     def __str__(self):
-        return f"{self.comment} {self.rating}d by {self.user}"
+        return f"User[{self.user.pk} | Comment[{self.comment.pk}] -- {self.rating}"
