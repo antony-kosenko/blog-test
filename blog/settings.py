@@ -20,6 +20,7 @@ SECRET_KEY = os.getenv("KEY")
 DEBUG = True
 
 ALLOWED_HOSTS = []
+INTERNAL_IPS = ['127.0.0.1',]
 
 
 # Application definition
@@ -35,6 +36,8 @@ INSTALLED_APPS = [
 
     # third-party apps
     'rest_framework',
+    "debug_toolbar",
+    'corsheaders',
     'channels',
     'mptt',
 
@@ -52,7 +55,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.common.CommonMiddleware',
 ]
+
+CORS_ORIGIN_ALLOW_ALL = True 
 
 ROOT_URLCONF = 'blog.urls'
 
@@ -112,6 +120,7 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+RECAPTCHA_SECRET_KEY = os.getenv("CAPTCHA")
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
@@ -151,8 +160,11 @@ DJANGORESIZED_DEFAULT_NORMALIZE_ROTATION = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
-    'DEFAULT_PERMISSION_CLASSES': [
-        'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
+    # ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.SessionAuthentication',
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25
