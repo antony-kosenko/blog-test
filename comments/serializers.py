@@ -20,25 +20,30 @@ class NewCommentSerializer(serializers.ModelSerializer):
         read_only_fields = ('date_created', )
 
 
+class CommentRecusrsiveChildField(serializers.Serializer):
+    """ Comment field for nested objects serialization. """
+    def to_representation(self, instance):
+        serializer = self.parent.parent.__class__(instance, context=self.context)
+        serializer_data = serializer.data
+        serializer_data.pop("parent")
+        return serializer_data
+
+
 class CommentSerializer(serializers.ModelSerializer):
     """ Serializes Comment model data. """
 
     user = BaseCustomUserSerializer()
+    children = CommentRecusrsiveChildField(many=True, read_only=True)
     rate = serializers.SerializerMethodField(read_only=True)
 
     class Meta:
         model = Comment
         exclude = ('level', 'lft', 'rght', 'tree_id')
-        read_only_fields = ('date_created', )
+        read_only_fields = ('date_created', 'children')
 
     def get_rate(self, obj):
         """ Returns a rate sum. """
         return obj.get_rating()
-
-    # def get_fields(self):
-    #     fields = super(CommentSerializer, self).get_fields()
-    #     fields['children'] = CommentSerializer(many=True, required=False, read_only=True)
-    #     return fields
 
     def create(self, validated_data):
         """
