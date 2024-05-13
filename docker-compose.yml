@@ -1,0 +1,44 @@
+version: '3'
+
+services:
+
+  db:
+    container_name: my_db
+    image: mysql:8
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_DATABASE: 'db_django'
+      MYSQL_PASSWORD: 'password'
+      MYSQL_ROOT_PASSWORD: 'password'
+    # restart: always
+    volumes:
+      - my_db:/var/lib/mysql
+
+  backend:
+    container_name: test_app
+    build: .
+    restart: always
+    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    ports:
+      - 8000:8000
+    depends_on:
+      - db
+    volumes:
+      - static_volume:/var/www/staticfiles
+
+  nginx:
+    image: nginx:alpine
+    restart: unless-stopped
+    ports:
+      - 80:80
+    volumes:
+      - static_volume:/var/www/staticfiles
+    depends_on:
+      - backend
+
+volumes:
+  my_db:
+  app_media:
+  static_volume:
+  

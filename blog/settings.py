@@ -171,14 +171,18 @@ if DEBUG:
     DATABASES = {
         'default': {
             'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
+            'NAME': BASE_DIR / "db.sqlite3",
         }
     }
 else:
-    load_dotenv("environs/.env.database")
     DATABASES = {
-    'default': dj_database_url.parse(os.getenv("DB_URL")),
-    } 
-
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'db_django',
+            'PASSWORD': 'password',
+            'HOST': 'my_db',
+            'PORT': 3306,
+        }
+    }
+    STATIC_ROOT = "var/www/staticfiles"
+    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

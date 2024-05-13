@@ -1,36 +1,45 @@
-FROM python:3.11-alpine
+# The base image we want to inherit from
+FROM python:3.11-slim
 
-ENV PYTHONFAULTHANDLER=1 \
+ARG DJANGO_ENV
+
+ENV DJANGO_ENV=${DJANGO_ENV} \
+  # python:
+  PYTHONFAULTHANDLER=1 \
   PYTHONUNBUFFERED=1 \
   PYTHONHASHSEED=random \
+  # pip:
   PIP_NO_CACHE_DIR=off \
   PIP_DISABLE_PIP_VERSION_CHECK=on \
   PIP_DEFAULT_TIMEOUT=100 \
-  # project variables:
-  DEBUG=False \
-  # Poetry's configuration:
-  POETRY_NO_INTERACTION=1 \
+  # poetry:
   POETRY_VIRTUALENVS_CREATE=false \
   POETRY_CACHE_DIR='/var/cache/pypoetry' \
-  POETRY_HOME='/usr/local' \
-  POETRY_VERSION=1.8.0
+  POETRY_VERSION=1.7.1
 
-# get poetry:
-RUN curl -sSL https://install.python-poetry.org | python3 -
+# System deps:
+RUN apt-get update \
+  && apt-get install --no-install-recommends -y \
+    bash \
+    build-essential \
+    curl \
+    gettext \
+    git \
+    libpq-dev \
+    wget \
+  && apt-get install python3-dev default-libmysqlclient-dev build-essential -y \
 
+  # Cleaning cache:
+  && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
+  && pip install "poetry==$POETRY_VERSION" && poetry --version 
+RUN mkdir -p var/www/staticfiles
+# set work directory
+WORKDIR /src
+COPY pyproject.toml poetry.lock /src/
 
-# Copy only requirements to cache them in docker layer
-WORKDIR /app
-COPY poetry.lock pyproject.toml /app/
+# Install dependencies:
+RUN poetry install
+# copy project
+COPY . /src
 
-# Project initialization:
-RUN poetry install --no-interaction --no-ansi
-
-# Creating folders, and files for a project:
-COPY . /app
-
-# Expose the port server is running on
 EXPOSE 8000
-
-# Start the server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
