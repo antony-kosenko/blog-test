@@ -90,7 +90,7 @@
 
       async function sendData() {
         try {
-          const response = await fetch(`${window.location.host}/api/v1/comments/`, {
+          const response = await fetch(`//${window.location.host}/api/v1/comments/`, {
           method: "POST",
           headers: {
                   'Accept': "application/json",
