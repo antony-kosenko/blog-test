@@ -177,11 +177,8 @@ if DEBUG:
 else:
     load_dotenv("environs/.env.database")
     DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DB_URL"),
-        conn_max_age=600
-    )
-} 
+    'default': dj_database_url.parse(os.getenv("DB_URL")),
+    } 
 
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
