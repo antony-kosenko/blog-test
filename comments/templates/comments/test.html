@@ -42,7 +42,13 @@
     </section>
 
     <script>
-      const ws = new WebSocket(`ws://localhost:8000/ws/`);
+      var ws_scheme = window.location.protocol === "https:" ? "wss" : "ws";
+      const ws = new WebSocket(
+        ws_scheme
+        + '://'
+        + window.location.host
+        + '/ws/'
+      );
       var allComments = document.getElementById("allComments");
       var newComment = document.getElementById("newComments");
 
@@ -84,7 +90,7 @@
 
       async function sendData() {
         try {
-          const response = await fetch("http://localhost:8000/api/v1/comments/", {
+          const response = await fetch(`//${window.location.host}/api/v1/comments/`, {
           method: "POST",
           headers: {
                   'Accept': "application/json",

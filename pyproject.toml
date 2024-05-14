@@ -18,6 +18,11 @@ django-mptt = "^0.16.0"
 requests = "^2.31.0"
 django-debug-toolbar = "^4.3.0"
 django-cors-headers = "^4.3.1"
+psycopg2-binary = "^2.9.9"
+dj-database-url = "^2.1.0"
+whitenoise = {extras = ["brotli"], version = "^6.6.0"}
+django-mysql = "^4.13.0"
+mysqlclient = "2.1.1"
 
 
 [build-system]
