@@ -23,7 +23,7 @@ def test_view(request):
 class CommentViewSet(ModelViewSet):
     """ Comment Viewset to handle base model operations. """
 
-    queryset = Comment.objects.all()
+    queryset = Comment.objects.filter(level=0).order_by("-date_created")
     serializer_class = CommentSerializer
     authentication_classes = []
     permission_classes = (AllowAny,)
