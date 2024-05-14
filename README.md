@@ -1,6 +1,25 @@
 Testing Guide
 ===============
 
+Installation
+---------------
+As per task requirements hererepository has two ways for testing:
+
+1) **Live server on hosting**;
+2) **Running containerized app in Docker on local machine.**
+
+## Hosting test
+
+1) URL for API calls: **https://blog-test-iyxb.onrender.com**;
+
+> **Note**: Hosting runs on free plan billing so innactivity causes server to stop until any activity observer. Please, wait for a minute after initial URL access to let server restart.
+
+## Docker
+Test task image available on publick repositor as well as local Dockerfile available to build image localy.
+1) To pull image from public repository : `docker pull kosanko/testing-app:latest`
+2) To build and run with docker-compose: `docker-compose up` from root project repository.
+
+> **Note:** API url remains the same in case of run Docker only the `{HOST_NAME}=127.0.0.1`
 
 Available API routes:
 ---------------------
@@ -71,23 +90,3 @@ Websockets testing available on root URL: `{HOST_NAME}/`
 >       > Defaul ordering for each parameter - `ascending`.
 >       > To list by `descending` order - simpy add `-` before the ordering parameter.<br>
 >    ***Example***: `{HOST_NAME}/api/v1/comments/?date_created_after=2024-05-14&ordering=-email`. Tthis API call will return all comments created after `2024-05-14` and all of them will be listed ordered by email value in descendent order;
-
-Installation
----------------
-As per task requirements hererepository has two ways for testing:
-
-1) **Live server on hosting**;
-2) **Running containerized app in Docker on local machine.**
-
-## Hosting test
-
-1) URL for API calls: **https://blog-test-iyxb.onrender.com**;
-
-> **Note**: Hosting runs on free plan billing so innactivity causes server to stop until any activity observer. Please, wait for a minute after initial URL access to let server restart.
-
-## Docker
-Test task image available on publick repositor as well as local Dockerfile available to build image localy.
-1) To pull image from public repository : `docker pull kosanko/testing-app:latest`
-2) To build and run with docker-compose: `docker-compose up` from root project repository.
-
-> **Note:** API url remains the same in case of run Docker only the `{HOST_NAME}=127.0.0.1`
