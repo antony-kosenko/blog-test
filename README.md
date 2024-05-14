@@ -53,7 +53,7 @@ Allowed http methods : (POST, OPTIONS)*:
 2) POST (update) - `{HOST_NAME}/api/v1/ratings/(PK)`
 
 ### Websockets:
-Websockets testing available on URL: `{HOST_NAME}/api/v1/ws`
+Websockets testing available on root URL: `{HOST_NAME}/`
 
 Installation
 ---------------

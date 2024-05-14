@@ -33,10 +33,8 @@ def captcha_valid(
     response = requests.post(token_validation_endpoint, params=payload).json()
     # extracting success value
     success = response.get("success")
-    print(success)
     # returning success state if bool and rising an exception otherwise
     if isinstance(success, bool):
-        print(isinstance(success, bool))
         return success
     else:
         raise ParseError(detail="Not valid captcha response. 'Success' value must"
