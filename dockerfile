@@ -32,7 +32,7 @@ RUN apt-get update \
   # Cleaning cache:
   && apt-get autoremove -y && apt-get clean -y && rm -rf /var/lib/apt/lists/* \
   && pip install "poetry==$POETRY_VERSION" && poetry --version 
-RUN mkdir -p var/www/staticfiles
+
 # set work directory
 WORKDIR /src
 COPY pyproject.toml poetry.lock /src/

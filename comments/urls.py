@@ -12,7 +12,7 @@ router.register('comments', CommentViewSet, basename='comment'),
 router.register('ratings', RatingViewSet, basename='rating')
 
 urlpatterns = [
-    path('test/', test_view),
+    path('ws/', test_view),
     path('', include(router.urls)),
 
 ]

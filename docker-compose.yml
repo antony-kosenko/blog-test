@@ -11,7 +11,7 @@ services:
       MYSQL_DATABASE: 'db_django'
       MYSQL_PASSWORD: 'password'
       MYSQL_ROOT_PASSWORD: 'password'
-    # restart: always
+    restart: always
     volumes:
       - my_db:/var/lib/mysql
 
@@ -19,13 +19,16 @@ services:
     container_name: test_app
     build: .
     restart: always
-    command: bash -c "python manage.py migrate && python manage.py runserver 0.0.0.0:8000"
+    command: bash -c "
+        python manage.py migrate && 
+        python manage.py collectstatic --no-input && 
+        python manage.py runserver 0.0.0.0:8000"
     ports:
       - 8000:8000
     depends_on:
       - db
     volumes:
-      - static_volume:/var/www/staticfiles
+      - static_volume:/src/staticfiles
 
   nginx:
     image: nginx:alpine
@@ -33,7 +36,7 @@ services:
     ports:
       - 80:80
     volumes:
-      - static_volume:/var/www/staticfiles
+      - static_volume:/src/staticfiles
     depends_on:
       - backend
 

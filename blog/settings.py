@@ -9,7 +9,6 @@ from dotenv import load_dotenv
 load_dotenv("environs/.env.config")
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -184,5 +183,5 @@ else:
             'PORT': 3306,
         }
     }
-    STATIC_ROOT = "var/www/staticfiles"
-    # STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
