@@ -55,6 +55,23 @@ Allowed http methods : (POST, OPTIONS)*:
 ### Websockets:
 Websockets testing available on root URL: `{HOST_NAME}/`
 
+> ***API response parameters and ordering:***<br>
+> Default comment sorting order: **LIFO**<br><br>
+>**Valide filtering parameters:**<br>
+> 1) `parent=` - returns child comments of parent comment (PK) provided;
+> 2) `date_created_after==` - **after** which date comments to be listed;
+> 3) `date_created_before==` - **before** which date comments to be listed; <br> **Note:** *Combination of `date_created_after` and `date_created_before` will list comments which were created between this two dates*.<br> *Date input format : **ISO 8601***. *Example: **[2024-05-14T08:57:43.919768Z]*** but even partial data provided is a valid request as backend will look for data that ***contains*** provided data;
+> 4) `username=` - returns comments of the user with requested username;
+> 5) `email=` - returns comments of the user with requested email;
+> 6) `ordering=`<br> - if provided orders list of requested comments with requested ordering.<br>
+>    Options:
+>      - `username` - lits all comments ordering by username;
+>      - `email` - lits all comments ordering by email;
+>      - `date_created` - lits all comments ordering by date creation ;
+>       > Defaul ordering for each parameter - `ascending`.
+>       > To list by `descending` order - simpy add `-` before the ordering parameter.<br>
+>    ***Example***: `{HOST_NAME}/api/v1/comments/?date_created_after=2024-05-14&ordering=-email`. Tthis API call will return all comments created after `2024-05-14` and all of them will be listed ordered by email value in descendent order;
+
 Installation
 ---------------
 As per task requirements hererepository has two ways for testing:

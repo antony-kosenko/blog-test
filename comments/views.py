@@ -1,6 +1,8 @@
 from django.db import IntegrityError
 from django.shortcuts import render
 
+from  django_filters import rest_framework
+
 from rest_framework import status
 from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
@@ -11,6 +13,7 @@ from rest_framework.exceptions import ValidationError, ParseError
 
 from comments.models import Comment, Rate
 from comments.services import RateService
+from comments.filters import CommentFilter
 from comments.serializers import CommentSerializer, NewCommentSerializer, RateSerializer
 from comments.utils import captcha_valid
 
@@ -25,8 +28,13 @@ class CommentViewSet(ModelViewSet):
 
     queryset = Comment.objects.filter(level=0).order_by("-date_created")
     serializer_class = CommentSerializer
+    filter_backends = (rest_framework.DjangoFilterBackend, )
+    filterset_class = CommentFilter
     authentication_classes = []
     permission_classes = (AllowAny,)
+
+    def get_serializer_class(self):
+        return super().get_serializer_class()
 
     def create(self, request, *args, **kwargs):
         try:

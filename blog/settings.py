@@ -39,10 +39,13 @@ INSTALLED_APPS = [
 
     # third-party apps
     'rest_framework',
-    "debug_toolbar",
+    'django_filters',
+    'debug_toolbar',
+    'crispy_forms',
     'corsheaders',
     'channels',
     'mptt',
+    "crispy_bootstrap4",
 
 
     # project apps
@@ -83,6 +86,8 @@ TEMPLATES = [
         },
     },
 ]
+
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 WSGI_APPLICATION = 'blog.wsgi.application'
 ASGI_APPLICATION = 'blog.asgi.application'
@@ -156,9 +161,11 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     # ],
+    
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
     ],
+    'DEFAULT_FILTER_BACKENDS': ['django_filters.rest_framework.DjangoFilterBackend'],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 25
 }
