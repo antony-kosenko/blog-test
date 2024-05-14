@@ -10,7 +10,7 @@ from comments.serializers import CommentSerializer, NewCommentSerializer
 
 class CommentConsumer(ListModelMixin, GenericAsyncAPIConsumer):
     queryset = Comment.objects.select_related("user", "parent")
-    serializer_class = NewCommentSerializer
+    serializer_class = CommentSerializer
     permission_classes = (AllowAny, )
 
     @action()
