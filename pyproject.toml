@@ -23,6 +23,9 @@ dj-database-url = "^2.1.0"
 whitenoise = {extras = ["brotli"], version = "^6.6.0"}
 django-mysql = "^4.13.0"
 mysqlclient = "2.1.1"
+django-filter = "^24.2"
+django-crispy-forms = "^2.1"
+crispy-bootstrap4 = "^2024.1"
 
 
 [build-system]

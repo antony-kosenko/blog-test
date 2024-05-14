@@ -24,7 +24,7 @@ class Comment(MPTTModel):
     text = models.TextField(max_length=500)
 
     class Meta:
-        ordering = ("-date_created",)
+        ordering = ("date_created",)
         verbose_name_plural = "Comments"
 
     def __str__(self):

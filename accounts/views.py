@@ -10,5 +10,5 @@ from accounts.serializers import CustomUserSerializer
 class CustomUserViewSet(ModelViewSet):
     """ CustomUser Viewset to handle base model operations. """
 
-    queryset = CustomUser.objects.all()
+    queryset = CustomUser.objects.all().order_by("-date_created")
     serializer_class = CustomUserSerializer
