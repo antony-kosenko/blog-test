@@ -5,45 +5,69 @@
 <head>
     <meta charset="UTF-8">
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-    <script src='{% static "comments/js/websocket.js" %}' defer></script>
-    <script src='{% static "comments/js/form_handler.js" %}' defer></script>
+    <script src="{% static 'comments/js/comment_builder.js' %}" defer></script>
+    <script src="{% static 'comments/js/websocket.js' %}" defer></script>
+    <script src="{% static 'comments/js/form_handler.js' %}" defer></script>  
+    <link rel="stylesheet" href="{% static 'comments/css/index.css' %}">
     <title>Chat</title>
 </head>
 <body>
-    <h1>Here is some test window</h1>
-<div style="display: flex; width: 100%; height: 100%; gap: 300px;">
-    <pre id="allComments"></pre>
-    <pre id="newComments"></pre>
+
+<script>
+    var arrowUpPath = "{% static "comments/img/arrow-up.svg" %}";
+    var arrowDownPath = "{% static "comments/img/arrow-down.svg" %}";
+    var defaultUserAvatar = "{% static "comments/img/default-user.svg" %}"
+</script>
+
+    <h1>Comments</h1>
+
+<div id="allCommentsSection">
+  
 </div>
 
-    <section style="height: fit-content; min-height: 500px;">
 
-      <form method="post" id="newCommentForm"> 
-        {% csrf_token %}
-        <div class="field">
-          <label for="username">Username:</label>
-          <input type="text" name="user-username" id="username" required />
-        </div>
-        <div class="field">
-          <label for="user-email">Email: </label>
-          <input type="email" name="user-email" id="user-email" required />
-        </div>
+<section class="reply-section">
 
-        <div class="field">
-          <label for="homepage">Homepage: </label>
-          <input type="url" name="user-homepage" id="homepage"/>
-        </div>
+  <form method="post" id="newCommentForm"> 
+    {% csrf_token %}
 
-        <div class="field">
-          <label for="text">Text</label>
-          <input type="text" name="text" id="text" required/>
-        </div>
-        <div class="g-recaptcha" data-sitekey="6LfA6NcpAAAAALR-d4hJGFOVZNb3bF6N1Ib-nIPt"></div>
-        <button type='submit'>Submit</button>
+    <section class="user-data-fields">
 
-      </form>
+      <div class="field">
+        <label for="username">Username:</label>
+        <input type="text" name="user-username" id="username" required />
+      </div>
+      <div class="field">
+        <label for="user-email">Email: </label>
+        <input type="email" name="user-email" id="user-email" required />
+      </div>
+  
+      <div class="field">
+        <label for="homepage">Homepage: </label>
+        <input type="url" name="user-homepage" id="homepage" placeholder="http://example.com" />
+      </div>
 
     </section>
+    
+    <section class="comment-data">
+
+      <textarea  
+              name="text" 
+              id="text"
+              placeholder="Type comment here."
+              required>
+              
+      </textarea>
+
+      <div class="g-recaptcha" data-sitekey="6LfA6NcpAAAAALR-d4hJGFOVZNb3bF6N1Ib-nIPt"></div>
+
+    </section>
+    
+    <button type='submit'>Submit</button>
+
+  </form>
+
+</section>
 
 </body>
 </html>

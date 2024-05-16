@@ -25,7 +25,6 @@ class CommentRecusrsiveChildField(serializers.Serializer):
     def to_representation(self, instance):
         serializer = self.parent.parent.__class__(instance, context=self.context)
         serializer_data = serializer.data
-        serializer_data.pop("parent")
         return serializer_data
 
 
