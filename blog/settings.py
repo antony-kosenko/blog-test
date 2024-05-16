@@ -135,7 +135,7 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-STATIC_URL = 'static/'
+STATIC_URL = 'staticfiles/'
 
 # Media files
 
@@ -194,10 +194,9 @@ else:
 
     DATABASES = {
     'default': dj_database_url.config(
-        # Replace this value with your local database's connection string.
         default=os.environ.get("DB_URL"),
         conn_max_age=600
     )
 }
-    STATIC_ROOT = BASE_DIR / 'staticfiles'
+    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
