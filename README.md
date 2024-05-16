@@ -17,7 +17,7 @@ As per task requirements hererepository has two ways for testing:
 ## Docker
 Test task image available on publick repositor as well as local Dockerfile available to build image localy.
 1) To pull image from public repository : `docker pull kosanko/testing-app:latest`
-2) To build and run with docker-compose: `docker-compose up` from root project repository.
+2) To build and run with docker-compose: `docker-compose up` from root project repository (**dockerized branch**).
 
 > **Note:** API url remains the same in case of run Docker only the `{HOST_NAME}=127.0.0.1`
 
