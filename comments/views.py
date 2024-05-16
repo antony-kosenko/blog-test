@@ -26,7 +26,12 @@ def test_view(request):
 class CommentViewSet(ModelViewSet):
     """ Comment Viewset to handle base model operations. """
 
-    queryset = Comment.objects.filter(level=0).order_by("-date_created")
+    queryset = (
+        Comment.objects.filter(level=0)
+        .select_related("user", "parent")
+        .prefetch_related("children")
+        .order_by("-date_created")
+        )
     serializer_class = CommentSerializer
     filter_backends = (rest_framework.DjangoFilterBackend, )
     filterset_class = CommentFilter
@@ -40,9 +45,9 @@ class CommentViewSet(ModelViewSet):
         try:
             captcha_validated = captcha_valid(request_data=request.data)
         except ValidationError as e:
-            return Response(e.detail, status=e.status_code)
+            return Response({"error": e.detail}, status=e.status_code)
         except ParseError as e:
-            return Response(e.detail, status=e.status_code)
+            return Response({"error": e.detail}, status=e.status_code)
         else:
             if not captcha_validated:
                 return Response({"captcha": "validation failed."}, status=status.HTTP_403_FORBIDDEN)
