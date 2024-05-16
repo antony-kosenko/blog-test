@@ -182,21 +182,21 @@ if DEBUG:
     }
 else:
 
-    # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.mysql',
-    #         'NAME': 'db_django',
-    #         'PASSWORD': 'password',
-    #         'HOST': 'my_db',
-    #         'PORT': 3306,
-    #     }
-    # }
-
     DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DB_URL"),
-        conn_max_age=600
-    )
-}
+        'default': {
+            'ENGINE': 'django.db.backends.mysql',
+            'NAME': 'db_django',
+            'PASSWORD': 'password',
+            'HOST': 'my_db',
+            'PORT': 3306,
+        }
+    }
+
+    # DATABASES = {
+    # 'default': dj_database_url.config(
+    #     default=os.environ.get("DB_URL"),
+    #     conn_max_age=600
+    # )
+    # }
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
