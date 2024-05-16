@@ -9,7 +9,12 @@ from comments.serializers import CommentSerializer, NewCommentSerializer
 
 
 class CommentConsumer(ListModelMixin, GenericAsyncAPIConsumer):
-    queryset = Comment.objects.select_related("user", "parent")
+    queryset = (
+        Comment.objects.filter(level=0)
+        .select_related("user", "parent")
+        .prefetch_related("children")
+        .order_by("-date_created")
+        )
     serializer_class = CommentSerializer
     permission_classes = (AllowAny, )
 
