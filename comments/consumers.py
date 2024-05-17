@@ -33,6 +33,11 @@ class CommentConsumer(ListModelMixin, GenericAsyncAPIConsumer):
         await self.send_json(dict(message.data))
 
     @comment_activity.serializer
-    def comment_activity(self, instance: Comment, action, **kwargs) -> NewCommentSerializer:
+    def comment_activity(
+            self,
+            instance: Comment,
+            action,
+            **kwargs
+    ) -> NewCommentSerializer:
         """Returns the comment serializer"""
         return NewCommentSerializer(instance)

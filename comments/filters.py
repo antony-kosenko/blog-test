@@ -9,20 +9,20 @@ class CommentFilter(rest_framework.FilterSet):
         field_name='user__username',
         lookup_expr='iexact',
         label="Username"
-        )
+    )
     email = filters.CharFilter(
         field_name='user__email',
         lookup_expr='iexact',
         label="Email"
-        )
+    )
     date_created = filters.IsoDateTimeFromToRangeFilter(
         lookup_expr='icontains',
-        )
+    )
     ordering = filters.OrderingFilter(
         fields=(
-        ('user__username', 'username'),
-        ('user__email', 'email'),
-        ('date_created', 'date_created')
+            ('user__username', 'username'),
+            ('user__email', 'email'),
+            ('date_created', 'date_created')
         )
     )
 

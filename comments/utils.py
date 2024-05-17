@@ -4,7 +4,7 @@ from django.http import QueryDict
 
 from rest_framework.exceptions import ValidationError, ParseError
 
-import blog.settings as app_settings
+import blog.settings as settings
 
 
 def captcha_valid(
@@ -26,7 +26,7 @@ def captcha_valid(
         raise ValidationError(detail="Captcha was not submitted.")
 
     payload = {
-        "secret": secret_key if secret_key else app_settings.RECAPTCHA_SECRET_KEY,
+        "secret": secret_key if secret_key else settings.RECAPTCHA_SECRET_KEY,
         "response": client_token,
     }
     # returns a response from captcha server
@@ -37,5 +37,7 @@ def captcha_valid(
     if isinstance(success, bool):
         return success
     else:
-        raise ParseError(detail="Not valid captcha response. 'Success' value must"
-                                "be 'bool' but returned value is '{type(success)}'")
+        raise ParseError(
+            detail="Not valid captcha response. 'Success' value must"
+            "be 'bool' but returned value is '{type(success)}'"
+        )

@@ -11,7 +11,8 @@ from accounts.services import CustomUserServices
 
 
 class OverwriteStorage(get_storage_class()):
-    """ Overwrites an existing file if file provided in request has a same name. """
+    """ Overwrites an existing file if file
+    provided in request has a same name. """    
     def _save(self, name, content):
         self.delete(name)
         return super(OverwriteStorage, self)._save(name, content)
@@ -23,11 +24,15 @@ class OverwriteStorage(get_storage_class()):
 def profile_avatar_path(instance, filename):
     # uploading avatar to dynamic PATH
     extension = filename.split(".")[-1]
-    return f"accounts/{instance.username}/profile_image/{instance.username}_avatar.{extension}"
+    return (
+        f"accounts/{instance.username}/profile_image/"
+        f"{instance.username}_avatar.{extension}"
+        )
 
 
 class CustomUser(AbstractBaseUser, PermissionsMixin):
-    """Custom User model extends a pre-defined django AbstractUser model."""
+    """Custom User model extends a pre-defined 
+    django AbstractUser model."""
 
     uuid = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     email = models.EmailField(verbose_name="email address", max_length=255, unique=True)

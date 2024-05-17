@@ -7,7 +7,11 @@ from accounts.models import CustomUser
 class Comment(MPTTModel):
     """ The base model represents comment object in db. """
 
-    user = models.ForeignKey(CustomUser, related_name="comments", on_delete=models.CASCADE)
+    user = models.ForeignKey(
+        CustomUser,
+        related_name="comments",
+        on_delete=models.CASCADE
+    )
     parent = TreeForeignKey(
         "self",
         blank=True,
@@ -45,12 +49,21 @@ class Rate(models.Model):
         ("D", "Dislike")
     )
 
-    comment = models.ForeignKey(Comment, related_name="rates", on_delete=models.CASCADE)
-    user = models.ForeignKey(CustomUser, related_name="rates", null=True, on_delete=models.SET_NULL)
+    comment = models.ForeignKey(
+        Comment,
+        related_name="rates",
+        on_delete=models.CASCADE
+    )
+    user = models.ForeignKey(
+        CustomUser,
+        related_name="rates",
+        null=True,
+        on_delete=models.SET_NULL
+    )
     rating = models.CharField(max_length=1, choices=RATE_OPTIONS)
 
     class Meta:
         unique_together = ("comment", "user", "rating")
 
     def __str__(self):
-        return f"User[{self.user.pk} | Comment[{self.comment.pk}] -- {self.rating}"
+        return f"User{self.user.pk} Comment{self.comment.pk} - {self.rating}"

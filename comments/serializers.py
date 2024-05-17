@@ -23,7 +23,10 @@ class NewCommentSerializer(serializers.ModelSerializer):
 class CommentRecusrsiveChildField(serializers.Serializer):
     """ Comment field for nested objects serialization. """
     def to_representation(self, instance):
-        serializer = self.parent.parent.__class__(instance, context=self.context)
+        serializer = self.parent.parent.__class__(
+            instance,
+            context=self.context
+        )
         serializer_data = serializer.data
         return serializer_data
 
@@ -56,7 +59,10 @@ class CommentSerializer(serializers.ModelSerializer):
             # performing atomic transaction to insure both instances created
             with transaction.atomic():
                 new_user = CustomUser.objects.create(**user_data)
-                comment = Comment.objects.create(user=new_user, **validated_data)
+                comment = Comment.objects.create(
+                    user=new_user,
+                    **validated_data
+                )
             return comment
         else:
             comment = Comment.objects.create(user=user, **validated_data)

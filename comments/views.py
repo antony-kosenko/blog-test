@@ -1,7 +1,7 @@
 from django.db import IntegrityError
 from django.shortcuts import render
 
-from  django_filters import rest_framework
+from django_filters import rest_framework
 
 from rest_framework import status
 from rest_framework.permissions import AllowAny
@@ -14,7 +14,10 @@ from rest_framework.exceptions import ValidationError, ParseError
 from comments.models import Comment, Rate
 from comments.services import RateService
 from comments.filters import CommentFilter
-from comments.serializers import CommentSerializer, NewCommentSerializer, RateSerializer
+from comments.serializers import (
+    CommentSerializer,
+    RateSerializer
+)
 from comments.utils import captcha_valid
 
 
@@ -50,24 +53,39 @@ class CommentViewSet(ModelViewSet):
             return Response({"error": e.detail}, status=e.status_code)
         else:
             if not captcha_validated:
-                return Response({"captcha": "validation failed."}, status=status.HTTP_403_FORBIDDEN)
+                return Response(
+                    {"captcha": "validation failed."},
+                    status=status.HTTP_403_FORBIDDEN
+                )
             return super().create(request, *args, **kwargs)
 
-    @action(detail=True, methods=["post", "get"], url_path="rate/(?P<rate_type>[^/.]+)")
+    @action(
+        detail=True,
+        methods=["post", "get"],
+        url_path="rate/(?P<rate_type>[^/.]+)"
+    )
     def rate_set(self, request, rate_type: str, pk=None):
         """ Increases comment rating. """
         comment = self.get_object()
         user = self.request.user
         try:
-            rate = RateService.set_rate(instance=comment, user=user, action=rate_type)
+            rate = RateService.set_rate(
+                instance=comment, user=user, action=rate_type
+            )
         except ValueError as e:
-            return Response({"rate": str(e)}, status=status.HTTP_406_NOT_ACCEPTABLE)
+            return Response(
+                {"rate": str(e)}, status=status.HTTP_406_NOT_ACCEPTABLE
+            )
         except IntegrityError as e:
-            return Response({"rate": str(e)}, status=status.HTTP_400_BAD_REQUEST)
+            return Response(
+                {"rate": str(e)}, status=status.HTTP_400_BAD_REQUEST
+            )
 
         else:
             serializer = RateSerializer(rate)
-            return Response({"rate": serializer.data}, status=status.HTTP_201_CREATED)
+            return Response(
+                {"rate": serializer.data}, status=status.HTTP_201_CREATED
+            )
 
 
 class RatingViewSet(
