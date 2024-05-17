@@ -25,8 +25,8 @@ def profile_avatar_path(instance, filename):
     # uploading avatar to dynamic PATH
     extension = filename.split(".")[-1]
     return (
-        f"accounts/{instance.username}/profile_image/
-        {instance.username}_avatar.{extension}"
+        f"accounts/{instance.username}/profile_image/"
+        f"{instance.username}_avatar.{extension}"
         )
 
 
