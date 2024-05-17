@@ -1,7 +1,5 @@
 from django.contrib.auth.base_user import BaseUserManager
 
-from accounts.services import CustomUserServices
-
 
 class CustomUserManager(BaseUserManager):
     """ Extends base 'objects' manger with custom operations. """

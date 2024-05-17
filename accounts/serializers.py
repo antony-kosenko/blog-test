@@ -4,7 +4,8 @@ from accounts.models import CustomUser
 
 
 class BaseCustomUserSerializer(serializers.ModelSerializer):
-    """ Base CustomUser serializer for data processing in external project apps """
+    """ Base CustomUser serializer for data
+    processing in external project apps """
 
     class Meta:
         model = CustomUser

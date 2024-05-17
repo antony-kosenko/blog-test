@@ -8,10 +8,8 @@ from dotenv import load_dotenv
 # loading env variables
 load_dotenv("environs/.env.config")
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -24,7 +22,6 @@ DEBUG = False
 
 ALLOWED_HOSTS = ["*"]
 INTERNAL_IPS = ["*"]
-
 
 # Application definition
 
@@ -47,7 +44,6 @@ INSTALLED_APPS = [
     'mptt',
     "crispy_bootstrap4",
 
-
     # project apps
     'accounts',
     'comments',
@@ -67,7 +63,7 @@ MIDDLEWARE = [
     'django.middleware.common.CommonMiddleware',
 ]
 
-CORS_ORIGIN_ALLOW_ALL = True 
+CORS_ORIGIN_ALLOW_ALL = True
 
 ROOT_URLCONF = 'blog.urls'
 
@@ -131,7 +127,6 @@ USE_I18N = True
 
 USE_TZ = True
 
-
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
@@ -161,7 +156,7 @@ REST_FRAMEWORK = {
     # 'DEFAULT_PERMISSION_CLASSES': [
     #     'rest_framework.permissions.DjangoModelPermissionsOrAnonReadOnly'
     # ],
-    
+
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
     ],
@@ -193,10 +188,10 @@ else:
     # }
 
     DATABASES = {
-    'default': dj_database_url.config(
-        default=os.environ.get("DB_URL"),
-        conn_max_age=600
-    )
-}
+        'default': dj_database_url.config(
+            default=os.environ.get("DB_URL"),
+            conn_max_age=600
+        )
+    }
     STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
