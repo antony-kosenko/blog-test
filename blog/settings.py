@@ -18,7 +18,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = os.environ.get("KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["*"]
 INTERNAL_IPS = ["*"]
@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     # third-party apps
     'rest_framework',
     'django_filters',
-    'debug_toolbar',
+    # 'debug_toolbar',
     'crispy_forms',
     'corsheaders',
     'channels',
@@ -168,30 +168,30 @@ REST_FRAMEWORK = {
 # Database
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
-if DEBUG:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / "db.sqlite3",
-        }
+# if DEBUG:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / "db.sqlite3",
+#         }
+#     }
+# else:
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': 'db_django',
+        'PASSWORD': 'password',
+        'HOST': 'my_db',
+        'PORT': 3306,
     }
-else:
+}
 
     # DATABASES = {
-    #     'default': {
-    #         'ENGINE': 'django.db.backends.mysql',
-    #         'NAME': 'db_django',
-    #         'PASSWORD': 'password',
-    #         'HOST': 'my_db',
-    #         'PORT': 3306,
-    #     }
+    #     'default': dj_database_url.config(
+    #         default=os.environ.get("DB_URL"),
+    #         conn_max_age=600
+    #     )
     # }
-
-    DATABASES = {
-        'default': dj_database_url.config(
-            default=os.environ.get("DB_URL"),
-            conn_max_age=600
-        )
-    }
-    STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-    STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

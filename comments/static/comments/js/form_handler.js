@@ -55,12 +55,29 @@ async function sendData() {
         }
       )
     });
+    if (!response.ok) {
+      const text = await response.text();
+			console.log(text)
+      throw Error(text);
+    }
   } catch (e) {
     console.error(e);
-}
-}
+}}
+
 // Take over form submission
 form.addEventListener("submit", (event) => {
   event.preventDefault();
   sendData();
 });
+
+
+const iterate = (obj) => {
+    Object.keys(obj).forEach(key => {
+
+    console.log(`key: ${key}, value: ${obj[key]}`)
+
+    if (typeof obj[key] === 'object' && obj[key] !== null) {
+            iterate(obj[key])
+        }
+    })
+}
